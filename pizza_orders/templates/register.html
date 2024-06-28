@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %} Register {% endblock %}
+
+
+{% block main %}
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <div class="bg-amber-400 m-8 p-8 rounded-lg text-white shadow-lg">
+        <h2 class="text-3xl text-center">Register</h2>
+        <p class="text-center text-sm mt-1 text-gray-100">login to order delicious pizzas</p>
+        <form action="" method="post" class="m-8">
+            {% csrf_token %}
+            <div class="mt-4">
+                <label for="username" class="block">Username</label>
+                <input type="text" name="username" class="mt-1 block w-full rounded-md text-black border-gray-400 shadow-sm focus:border-sky-500 focus:border-2">
+            </div>
+            <div class="mt-4">
+                <label for="email" class="block">Email</label>
+                <input type="text" name="email" class="mt-1 block w-full rounded-md text-black border-gray-400 shadow-sm focus:border-sky-500 focus:border-2">
+            </div>
+            <div class="mt-4">
+                <label for="password" class="block">Password</label>
+                <input type="password" name="password" class="mt-1 block w-full rounded-md text-black border-gray-400 shadow-sm focus:border-sky-500 focus:border-2">
+            </div>
+            <div class="grid place-content-center mt-10">
+                <button type="submit" class="bg-rose-500 font-medium text-lg p-4 w-60 rounded-lg">Register</button>
+            </div>
+            <p class="mt-5">Already have an account ? <a href="{% url 'customer_login' %}" class="text-rose-500 font-medium">login</a></p>
+        </form>
+    </div>
+
+{% endblock %}
