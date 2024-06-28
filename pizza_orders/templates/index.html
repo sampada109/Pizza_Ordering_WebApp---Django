@@ -1,7 +1,28 @@
 {% extends 'base.html' %}
 
-{% block content %}
+{% block title %} Pizzeria | Home {% endblock %}
 
 
+{% block main %}
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-5  md:gap-8 m-4 md:m-6">
+  {% for m in menu %}
+
+      <div class="bg-white shadow-lg rounded-md">
+        <img src="{{ m.pizza_image.url }}" alt="">
+        <div class="p-4">
+          <div class="flex justify-between items-center">
+            <h3 class="font-medium">{{ m.name }}</h3>
+            <button class="cursor-text border px-1 {% if m.category == 'Veg' %}border-emerald-700{% else %}border-rose-600{% endif %}"><i class="ri-circle-fill {% if m.category == 'Veg' %}text-emerald-700{% else %}text-rose-600{% endif %} "></i></button>
+          </div>
+          <p class="text-gray-500 mt-3 text-sm">{{ m.description }}</p>
+          <div class="mt-3 flex justify-between items-center">
+            <p class="font-medium">₹{{ m.price }}</p>
+            <button class="border border-emerald-600 p-1 text-emerald-600 hover:bg-emerald-600 hover:text-white">Add To Cart</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
 
 {% endblock %}

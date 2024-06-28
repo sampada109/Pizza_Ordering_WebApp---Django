@@ -3,3 +3,5 @@ django
 django-tailwind
 
 'django-tailwind[reload]'
+
+Pillow

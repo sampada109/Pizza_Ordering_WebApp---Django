@@ -1,13 +1,14 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 import uuid
 
 
 # Create your models here.
 class BaseModel(models.Model):
     uid = models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    updated_at = models.DateTimeField(default=timezone.now)
 
     class Meta:
         abstract = True
@@ -33,12 +34,14 @@ class Pizza(BaseModel):
     ]
     name = models.CharField(max_length=100)
     description = models.TextField()
+    pizza_image = models.ImageField(upload_to="pizza_image/", null=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     available = models.BooleanField(default=True)
 
 
-class Order(BaseModel):
+
+class CustomerOrder(BaseModel):
     STATUS_CHOICES = [
         ('Pending', 'Pending'), ('Completed', 'Completed')
     ]
@@ -47,7 +50,7 @@ class Order(BaseModel):
 
 
 class OrderItem(BaseModel):
-    order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
+    order = models.ForeignKey(CustomerOrder, related_name='items', on_delete=models.CASCADE)
     pizza = models.ForeignKey(Pizza, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     topping = models.ManyToManyField(Topping, blank=True)
