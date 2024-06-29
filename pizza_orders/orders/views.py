@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
@@ -78,3 +78,11 @@ def user_logout(request):
 #user profile - account page
 def user_account(request):
     return render(request, 'account.html')
+
+
+#pizza detailed page
+def pizza_detail(request, pz_id):
+    pizza = Pizza.objects.get(uid = pz_id)
+    veg_topping = Topping.objects.filter(category='Veg')
+    non_veg_topping = Topping.objects.filter(category='Non-Veg')
+    return render(request, 'pizza_detail.html', {'pizza':pizza, 'veg_topping':veg_topping, 'non_veg_topping':non_veg_topping})

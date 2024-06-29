@@ -29,7 +29,7 @@ class Topping(models.Model):
     ]
     topping_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=5, decimal_places=2)
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICE, null=True)
 
 
 class Pizza(BaseModel):

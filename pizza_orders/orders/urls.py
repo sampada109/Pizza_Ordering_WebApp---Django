@@ -7,4 +7,5 @@ urlpatterns = [
     path('register/', customer_register, name='customer_register'),
     path('logout/', user_logout, name='user_logout'),
     path('account/', user_account, name='user_account'),
+    path('pizza_detail/<uuid:pz_id>/', pizza_detail, name='pizza_detail'),
 ]
