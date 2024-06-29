@@ -24,8 +24,12 @@ class Size(BaseModel):
 
 
 class Topping(models.Model):
+    CATEGORY_CHOICE = [
+        ('Veg', 'Veg'), ('Non-Veg', 'Non-Veg')
+    ]
     topping_name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=5, decimal_places=2)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICE)
 
 
 class Pizza(BaseModel):

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 
 # Create your views here.
 
@@ -12,6 +12,7 @@ def index(request):
     return render(request, 'index.html', {'menu':menu})
 
 
+#login
 def customer_login(request):
     if request.method == 'POST':
         try:
@@ -40,6 +41,7 @@ def customer_login(request):
     return render(request, 'login.html')
 
 
+#register
 def customer_register(request):
     if request.method == 'POST':
         try:
@@ -65,3 +67,14 @@ def customer_register(request):
             return redirect('customer_register')
         
     return render(request, 'register.html')
+
+
+#logout
+def user_logout(request):
+    logout(request)
+    return redirect('/')
+
+
+#user profile - account page
+def user_account(request):
+    return render(request, 'account.html')
