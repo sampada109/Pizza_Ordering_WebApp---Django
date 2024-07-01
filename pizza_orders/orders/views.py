@@ -131,11 +131,11 @@ def add_item_cart(request, pz_id):
 
     #pizza through index page
     else:
-        size_name = 'Regular'
+        size = Size.objects.all()[:1].get()
         quantity = 1
-        toppings_list = Topping.objects.none()  #no default toppings
+        toppings = Topping.objects.none()  #no default toppings
 
-        total_price = pizza.price + size.price
+        total_price = pizza.price
 
         #create or get the order
         order, created = CustomerOrder.objects.get_or_create(user = request.user)
@@ -205,3 +205,12 @@ def cart_view(request):
 #         non_veg_toppings = Topping.objects.filter(category='Non-Veg') 
 
 #     return render(request, 'pizza_detail.html', {'pizza':pizza, 'selected_order_item':order_item,'selected_size':size, 'veg_topping':veg_toppings, 'non_veg_topping':non_veg_toppings})
+
+
+# deleting item from cart
+def delete_cart_item(request, order_item_id):
+    try:
+        OrderItem.objects.get(uid = order_item_id).delete()
+        return redirect('cart_view')
+    except Exception as e:
+        return redirect('cart_view', e)
