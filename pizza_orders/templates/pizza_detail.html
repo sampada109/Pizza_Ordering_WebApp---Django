@@ -14,7 +14,10 @@
 
     <!-- name and description  -->
     <div class="my-6 p-2">
-        <h2 class="text-xl font-semibold">{{ pizza.name }}</h2>
+        <div class="flex items-center justify-between">
+            <h2 class="text-xl font-semibold">{{ pizza.name }}</h2>
+            <button class="cursor-text border px-1 {% if pizza.category == 'Veg' %}border-emerald-700{% else %}border-rose-600{% endif %}"><i class="ri-circle-fill {% if pizza.category == 'Veg' %}text-emerald-700{% else %}text-rose-600{% endif %} "></i></button>
+        </div>
         <p class="mt-2 text-gray-600">{{ pizza.description }}</p>
         <div class="h-[1px] bg-black mt-10"></div>
     </div>
