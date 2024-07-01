@@ -20,6 +20,7 @@ class BaseModel(models.Model):
 
 class Size(BaseModel):
     size = models.CharField(max_length=20)
+    slices = models.PositiveIntegerField(max_length=2, null=True)
     price = models.DecimalField(max_digits=5, decimal_places=2)
 
 

@@ -7,13 +7,19 @@ class PizzaAdmin(admin.ModelAdmin):
     list_display = ('name', 'category', 'price', 'available')
 
 class SizeAdmin(admin.ModelAdmin):
-    list_display = ('size', 'price')
+    list_display = ('size', 'slices', 'price')
 
 class ToppingAdmin(admin.ModelAdmin):
     list_display = ('topping_name', 'category', 'price')
 
+class CutomerOrderAdmin(admin.ModelAdmin):
+    list_display = ('user', 'status')
+
+class OrderItemAdmin(admin.ModelAdmin):
+    list_display = ('order', 'price')
+
 admin.site.register(Size, SizeAdmin)
 admin.site.register(Topping, ToppingAdmin)
 admin.site.register(Pizza,PizzaAdmin)
-admin.site.register(CustomerOrder)
-admin.site.register(OrderItem)
+admin.site.register(CustomerOrder, CutomerOrderAdmin)
+admin.site.register(OrderItem, OrderItemAdmin)

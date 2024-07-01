@@ -83,6 +83,125 @@ def user_account(request):
 #pizza detailed page
 def pizza_detail(request, pz_id):
     pizza = Pizza.objects.get(uid = pz_id)
+    size = Size.objects.all()
     veg_topping = Topping.objects.filter(category='Veg')
     non_veg_topping = Topping.objects.filter(category='Non-Veg')
-    return render(request, 'pizza_detail.html', {'pizza':pizza, 'veg_topping':veg_topping, 'non_veg_topping':non_veg_topping})
+
+    # print(pizza.name)
+    return render(request, 'pizza_detail.html', {'pizza':pizza, 'veg_topping':veg_topping, 'non_veg_topping':non_veg_topping, 'size':size})
+
+
+# add pizza to cart 
+def add_item_cart(request, pz_id):
+    pizza = Pizza.objects.get(uid = pz_id)
+
+    # pizza detail page 
+    if request.method == 'POST':
+        size_name = request.POST.get('size')
+        quantity = int(request.POST.get('quantity'))
+        toppings_list = request.POST.getlist('toppings')
+
+        print("*** ",pizza.name, size_name, quantity, toppings_list)
+
+        size = Size.objects.get(size=size_name)
+        toppings = Topping.objects.filter(topping_name__in=toppings_list)
+
+        # calculate price
+        total_price = pizza.price + size.price
+        for top in toppings:
+            total_price += top.price
+        total_price *= quantity
+
+        #create or get the order
+        order, created = CustomerOrder.objects.get_or_create(user = request.user)
+
+        # create OrderItem 
+        order_item = OrderItem.objects.create(
+            order = order,
+            pizza = pizza,
+            size = size,
+            quantity = quantity,
+            price = total_price
+        )
+
+        order_item.topping.set(toppings)
+        order_item.save()
+
+        return redirect('/')
+
+    #pizza through index page
+    else:
+        size_name = 'Regular'
+        quantity = 1
+        toppings_list = Topping.objects.none()  #no default toppings
+
+        total_price = pizza.price + size.price
+
+        #create or get the order
+        order, created = CustomerOrder.objects.get_or_create(user = request.user)
+
+        # create OrderItem 
+        order_item = OrderItem.objects.create(
+            order = order,
+            pizza = pizza,
+            size = size,
+            quantity = quantity,
+            price = total_price
+        )
+
+        order_item.topping.set(toppings)
+        order_item.save()
+        
+        return redirect('/')
+    
+
+# cart page 
+def cart_view(request):
+    #get current user pending orders 
+    customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
+
+    #check if there is any pending order or not
+    if not customer_orders:
+        items = []
+        order_total = 0
+    else:
+        items = OrderItem.objects.filter(order = customer_orders)
+        # calculate total price for the order 
+        order_total = sum(item.price for item in items)
+
+    return render(request, 'cart.html', {'items':items, 'order_total':order_total})
+
+
+# customise cart item 
+# def customize_cart(request, order_item_id):
+#     order_item = OrderItem.objects.get(uid = order_item_id)
+#     pizza = order_item.pizza
+
+#     # if any update id done 
+#     if request.method == 'POST':
+#         size = request.POST.get('size')
+#         quantity = int(request.POST.get('quantity'))
+#         topping_list = request.POST.getlist('toppings')
+
+#         #update existing order items
+#         order_item.size = Size.objects.get(size=size)
+#         order_item.quantity = quantity
+#         toppings = Topping.objects.filter(topping_name__in = topping_list)
+#         order_item.topping.set(toppings)
+#         total_price = pizza.price + size.price
+#         for top in toppings:
+#             total_price += top.price
+#         total_price *= quantity
+#         order_item.price = total_price
+
+#         order_item.save()
+
+#         return redirect('cart_view')
+    
+#     else:
+#         size = order_item.size
+#         quantity = order_item.quantity
+#         veg_toppings = Topping.objects.filter(category='Veg') 
+#         non_veg_toppings = Topping.objects.filter(category='Non-Veg') 
+
+#     return render(request, 'pizza_detail.html', {'pizza':pizza, 'selected_order_item':order_item,'selected_size':size, 'veg_topping':veg_toppings, 'non_veg_topping':non_veg_toppings})

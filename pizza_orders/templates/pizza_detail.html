@@ -20,106 +20,96 @@
     </div>
 
 
-    <!-- size  -->
-    <div class="mt-10 p-2">
-        <h2 class="text-xl font-medium">Select Size</h2>
-        <div class="mt-4 px-6 flex items-center justify-evenly">
-            <div>
-                <label class="relative cursor-pointer">
-                    <input type="radio" name="size" value="Small" class="peer sr-only">
-                    <div class="border flex flex-col items-center justify-center border-gray-500 text-gray-700 rounded-lg py-2 px-8 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                        <h3 class="font-medium">Small</h3>
-                        <p class="">4 pcs</p>
-                    </div>
-                </label>
-            </div>
-            <div>
-                <label class="relative cursor-pointer">
-                    <input type="radio" name="size" value="Medium" class="peer sr-only">
-                    <div class="border flex flex-col items-center justify-center border-gray-500 text-gray-700 rounded-lg py-2 px-8 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                        <h3 class="font-medium">Medium</h3>
-                        <p class="">6 pcs</p>
-                    </div>
-                </label>
-            </div>
-            <div>
-                <label class="relative cursor-pointer">
-                    <input type="radio" name="size" value="Large" class="peer sr-only">
-                    <div class="border flex flex-col items-center justify-center border-gray-500 text-gray-700 rounded-lg py-2 px-8 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                        <h3 class="font-medium">Large</h3>
-                        <p class="">8 pcs</p>
-                    </div>
-                </label>
-            </div>
-            <div>
-                <label class="relative cursor-pointer">
-                    <input type="radio" name="size" value="Extra Large" class="peer sr-only">
-                    <div class="border flex flex-col items-center justify-center border-gray-500 text-gray-700 rounded-lg py-2 px-8 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                        <h3 class="font-medium">Extra Large</h3>
-                        <p class="">10 pcs</p>
-                    </div>
-                </label>
-            </div>
-        </div>
-        <div class="h-[1px] bg-black mt-12"></div>
-    </div>
+    <form method="post" action="{% url 'add_item_cart' pizza.uid %}">
+        {% csrf_token %}
 
-
-    <!-- toppings  -->
-    <div class="mt-10 p-2">
-        <h2 class="text-xl font-medium">Add Toppings</h2>
-        <!-- veg toppings  -->
-        <div class="my-4 p-2">
-            <h2 class="font-medium text-lg">Veg Toppings</h2>
-            <div class="mt-4 grid grid-cols-3 gap-4">
-                {% for top in veg_topping %}
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="{{top.topping_name}}" value="mushrooms" class="peer sr-only">
-                        <div class="border border-gray-500 rounded-lg p-4 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                            <span class="block peer-checked:text-emerald-700 font-medium text-gray-700">{{ top.topping_name }}</span>
-                        </div>
-                    </label>
+        <!-- size  -->
+        <div class="mt-10 p-2">
+            <h2 class="text-xl font-medium">Select Size</h2>
+            <div class="mt-4 px-6 flex items-center justify-evenly">
+                {% for sz in size %}
+                    <div>
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="size" value="{{ sz.size }}" class="peer sr-only">
+                            <div class="border flex flex-col items-center justify-center border-gray-500 text-gray-700 rounded-lg py-2 px-8 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
+                                <h3 class="font-medium">{{ sz.size }}</h3>
+                                <p class="">{{ sz.slices }} pcs</p>
+                                <p>₹{{ sz.price }}</p>
+                            </div>
+                        </label>
+                        
+                    </div>
                 {% endfor %}
             </div>
+            <div class="h-[1px] bg-black mt-12"></div>
         </div>
+
+
+        <!-- toppings  -->
+        <div class="mt-10 p-2">
+            <h2 class="text-xl font-medium">Add Toppings</h2>
+            <!-- veg toppings  -->
+            <div class="my-4 p-2">
+                <h2 class="font-medium text-lg">Veg Toppings</h2>
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                    {% for top in veg_topping %}
+                        <label class="relative cursor-pointer">
+                            <input type="checkbox" name="toppings" value="{{ top.topping_name }}" class="peer sr-only">
+                            <div class="border border-gray-500 rounded-lg p-4 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
+                                <span class="block peer-checked:text-emerald-700 font-medium text-gray-700">{{ top.topping_name }}</span>
+                                <span class="block peer-checked:text-emerald-700 text-gray-700">₹{{ top.price }}</span>
+                            </div>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <!-- non-veg toppings  -->
+            <div class="my-4 p-2">
+                <h2 class="font-medium text-lg">Non-Veg Toppings</h2>
+                <div class="mt-4 grid grid-cols-3 gap-4">
+                    {% for top in non_veg_topping %}
+                        <label class="relative cursor-pointer">
+                            <input type="checkbox" name="toppings" value="{{ top.topping_name }}" class="peer sr-only">
+                            <div class="border border-gray-500 rounded-lg p-4 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
+                                <span class="block peer-checked:text-emerald-700 font-medium text-gray-700">{{ top.topping_name }}</span>
+                                <span class="block peer-checked:text-emerald-700 text-gray-700">₹{{ top.price }}</span>
+                            </div>
+                        </label>
+                    {% endfor %}
+                </div>
+            </div>  
+            <div class="h-[1px] bg-black mt-12"></div>      
+        </div>
+
+
+        <!-- quantity  -->
+        <div class="my-10 flex items-center justify-between">
+            <div>
+                <label for="quantity" class="text-xl font-medium">Quantity</label>
+                <input type="number" name="quantity" min="1" max="10" value="1" class="rounded-md border-emerald-700 bg-emerald-50 focus:border-emerald-700 focus:ring-emerald-700">
+            </div>
+            <div class="text-lg">
+                <span class="font-medium">Category : </span>
+                <span class="text-gray-600 font-medium">{{ pizza.category }}</span>
+            </div>
+        </div>
+     
+     
+     
         
-        <!-- non-veg toppings  -->
-        <div class="my-4 p-2">
-            <h2 class="font-medium text-lg">Non-Veg Toppings</h2>
-            <div class="mt-4 grid grid-cols-3 gap-4">
-                {% for top in non_veg_topping %}
-                    <label class="relative cursor-pointer">
-                        <input type="checkbox" name="{{top.topping_name}}" value="mushrooms" class="peer sr-only">
-                        <div class="border border-gray-500 rounded-lg p-4 text-center peer-checked:border-emerald-700 peer-checked:bg-emerald-50">
-                            <span class="block peer-checked:text-emerald-700 font-medium text-gray-700">{{ top.topping_name }}</span>
-                        </div>
-                    </label>
-                {% endfor %}
+        
+        <!-- bottom border - price & add to cart  -->
+        <div class="bg-rose-500 py-5 px-12">
+            <div class="flex justify-between items-center">
+                <p class="font-medium text-white text-lg">Total Price | ₹{{ pizza.price }}</p>
+                <a href="{% url 'add_item_cart' pizza.uid %}"><button class="border p-3 font-medium text-white border-white hover:bg-emerald-600 hover:text-white">Add To Cart</button></a>
             </div>
-        </div>  
-        <div class="h-[1px] bg-black mt-12"></div>      
-    </div>
-
-
-    <!-- quantity  -->
-     <div class="my-10">
-        <div>
-            <label for="quantity" class="text-xl font-medium">Quantity</label>
-            <input type="number" name="quantity" min="1" max="10" value="1" class="rounded-md border-emerald-700 bg-emerald-50 focus:border-emerald-700 focus:ring-emerald-700">
         </div>
-     </div>
-     
-     
-    </div>
+
+        
+    </form>
     
-
-    <!-- bottom border - price & add to cart  -->
-     <div class="bg-rose-500 py-5 px-12">
-        <div class="flex justify-between items-center">
-            <p class="font-medium text-white text-lg">Total Price | ₹{{ pizza.price }}</p>
-            <a href=""><button class="border p-3 font-medium text-white border-white hover:bg-emerald-600 hover:text-white">Add To Cart</button></a>
-          </div>
-     </div>
-
+</div>
 
 {% endblock %}

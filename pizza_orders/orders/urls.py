@@ -8,4 +8,7 @@ urlpatterns = [
     path('logout/', user_logout, name='user_logout'),
     path('account/', user_account, name='user_account'),
     path('pizza_detail/<uuid:pz_id>/', pizza_detail, name='pizza_detail'),
+    path('add_item_cart/<uuid:pz_id>/', add_item_cart, name='add_item_cart'),
+    path('cart_view/', cart_view, name='cart_view'),
+    # path('customize_cart/<uuid:order_item_id>', customize_cart, name='customize_cart'),
 ]
