@@ -13,7 +13,7 @@ class ToppingAdmin(admin.ModelAdmin):
     list_display = ('topping_name', 'category', 'price')
 
 class CutomerOrderAdmin(admin.ModelAdmin):
-    list_display = ('user', 'status')
+    list_display = ('user', 'total_amount','status')
 
 class OrderItemAdmin(admin.ModelAdmin):
     list_display = ('order', 'price')

@@ -5,3 +5,5 @@ django-tailwind
 'django-tailwind[reload]'
 
 Pillow
+
+instamojo-wrapper

@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 
+
+
 # Create your views here.
 
 
@@ -107,10 +109,12 @@ def add_item_cart(request, pz_id):
         toppings = Topping.objects.filter(topping_name__in=toppings_list)
 
         # calculate price
-        total_price = pizza.price + size.price
-        for top in toppings:
-            total_price += top.price
-        total_price *= quantity
+        # total_price = pizza.price + size.price
+        # for top in toppings:
+        #     total_price += top.price
+        # total_price *= quantity
+
+        total_price = OrderItem.total_price()
 
         #create or get the order
         order, created = CustomerOrder.objects.get_or_create(user = request.user)
@@ -135,7 +139,7 @@ def add_item_cart(request, pz_id):
         quantity = 1
         toppings = Topping.objects.none()  #no default toppings
 
-        total_price = pizza.price
+        total_price = OrderItem.total_price()
 
         #create or get the order
         order, created = CustomerOrder.objects.get_or_create(user = request.user)
@@ -168,6 +172,9 @@ def cart_view(request):
         items = OrderItem.objects.filter(order = customer_orders)
         # calculate total price for the order 
         order_total = sum(item.price for item in items)
+
+        customer_orders.total_amount = order_total
+        customer_orders.save()
 
     return render(request, 'cart.html', {'items':items, 'order_total':order_total})
 
