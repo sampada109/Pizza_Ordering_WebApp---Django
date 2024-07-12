@@ -79,7 +79,9 @@ def user_logout(request):
 
 #user profile - account page
 def user_account(request):
-    return render(request, 'account.html')
+    user = User.objects.get(username = request.user.username)
+    customer_order = CustomerOrder.objects.filter(user = request.user)
+    return render(request, 'account.html', {'user':user, 'customer_order':customer_order})
 
 
 #pizza detailed page
@@ -109,12 +111,10 @@ def add_item_cart(request, pz_id):
         toppings = Topping.objects.filter(topping_name__in=toppings_list)
 
         # calculate price
-        # total_price = pizza.price + size.price
-        # for top in toppings:
-        #     total_price += top.price
-        # total_price *= quantity
-
-        total_price = OrderItem.total_price()
+        total_price = pizza.price + size.price
+        for top in toppings:
+            total_price += top.price
+        total_price *= quantity
 
         #create or get the order
         order, created = CustomerOrder.objects.get_or_create(user = request.user)
@@ -133,13 +133,15 @@ def add_item_cart(request, pz_id):
 
         return redirect('/')
 
+
     #pizza through index page
     else:
         size = Size.objects.all()[:1].get()
         quantity = 1
         toppings = Topping.objects.none()  #no default toppings
 
-        total_price = OrderItem.total_price()
+        # calculate price 
+        total_price = pizza.price + size.price
 
         #create or get the order
         order, created = CustomerOrder.objects.get_or_create(user = request.user)
@@ -163,6 +165,7 @@ def add_item_cart(request, pz_id):
 def cart_view(request):
     #get current user pending orders 
     customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
+    order_count = OrderItem.objects.filter(order=customer_orders).count()
 
     #check if there is any pending order or not
     if not customer_orders:
@@ -174,6 +177,7 @@ def cart_view(request):
         order_total = sum(item.price for item in items)
 
         customer_orders.total_amount = order_total
+        customer_orders.item_in_cart = order_count
         customer_orders.save()
 
     return render(request, 'cart.html', {'items':items, 'order_total':order_total})

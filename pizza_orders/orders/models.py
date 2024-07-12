@@ -53,6 +53,7 @@ class CustomerOrder(BaseModel):
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
     payment_request_id = models.CharField(max_length=255, blank=True, null=True)
+    item_in_cart = models.IntegerField(blank=True, null=True)
     total_amount = models.DecimalField(max_digits=8, decimal_places=2, null=True)
 
 
@@ -63,9 +64,3 @@ class OrderItem(BaseModel):
     topping = models.ManyToManyField(Topping, blank=True)
     quantity = models.PositiveIntegerField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
-
-    def total_price(self):
-        base_price = self.pizza.price
-        size_price = self.size.price
-        topping_price = sum(top.price for top in self.topping.all())
-        return (base_price + size_price + topping_price) * self.quantity
