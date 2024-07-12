@@ -10,7 +10,7 @@ from django.contrib.auth import login, authenticate, logout
 
 
 def index(request):
-    menu = Pizza.objects.all()
+    menu = Pizza.objects.all().order_by('-updated_at')
     return render(request, 'index.html', {'menu':menu})
 
 
@@ -80,7 +80,7 @@ def user_logout(request):
 #user profile - account page
 def user_account(request):
     user = User.objects.get(username = request.user.username)
-    customer_order = CustomerOrder.objects.filter(user = request.user)
+    customer_order = CustomerOrder.objects.filter(user = request.user).order_by('-updated_at')
     return render(request, 'account.html', {'user':user, 'customer_order':customer_order})
 
 

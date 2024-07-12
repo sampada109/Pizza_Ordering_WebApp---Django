@@ -15,21 +15,20 @@
 	<body class="bg-amber-100">
 
 		<!-- navbar starts  -->
-		<nav class="bg-rose-500 flex items-center justify-between h-16 px-12 md:px-40 md:text-xl text-white">
+		<nav class="bg-rose-500 flex items-center justify-between h-16 px-3 md:px-20 lg:px-40 md:text-xl text-white">
 			<div class="left flex">
-				<a href=""><img class="h-9" src="https://cdn-icons-png.freepik.com/256/1404/1404945.png?semt=ais_hybrid" alt=""></a>
-				<a href=""><h4 class="hidden md:block ml-2 text-2xl font-medium">Pizzeria</h4></a>
+				<a href="{% url 'index' %}"><img class="h-9" src="https://cdn-icons-png.freepik.com/256/1404/1404945.png?semt=ais_hybrid" alt=""></a>
+				<a href="{% url 'index' %}"><h4 class="hidden lg:block ml-2 text-2xl font-medium">Pizzeria</h4></a>
 			</div>
-			<div class="middle space-x-4 md:space-x-7">
+			<div class="middle text-base md:text-lg space-x-2 md:space-x-7">
 				<a href="{% url 'index' %}">Menu</a>
 				<a href="">Offers</a>
-				<a href="">Contact</a>
 			</div>
 			<div class="right">
 				{% if request.user.is_authenticated %}
 				    <div class="flex items-center">
-						<a href="{% url 'cart_view' %}" class="text-2xl"><i class="ri-shopping-cart-2-line"></i></a>
-						<a href="{% url 'user_account' %}"><button class="ml-2 flex items-center border p-2 gap-1 border-white hover:bg-amber-400">
+						<a href="{% url 'cart_view' %}" class="text-xl md:text-2xl"><i class="ri-shopping-cart-2-line"></i></a>
+						<a href="{% url 'user_account' %}"><button class="ml-2 text-sm md:text-lg flex items-center border p-1 md:p-2 gap-1 border-white hover:bg-amber-400">
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
 							</svg>
@@ -37,8 +36,8 @@
 						</button></a>
 					</div>
 				{% else %}
-					<a href="{% url 'customer_register' %}"><button class="flex items-center border p-2 border-white hover:bg-emerald-500">Order Now 
-						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+					<a href="{% url 'customer_register' %}"><button class="flex items-center border p-2 text-base md:text-lg border-white hover:bg-emerald-500">Order Now 
+						<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4 md:size-6">
 						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
 						</svg>
 					</button>
@@ -49,7 +48,7 @@
 		<!-- navbar ends  -->
 
 		<!-- main content starts  -->
-		<main class="p-8">
+		<main class="p-4 md:p-8 my-4">
 			{% block main %}  {% endblock %}
 		</main>
 		<!-- main content ends   -->

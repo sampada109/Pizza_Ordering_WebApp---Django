@@ -5,7 +5,7 @@
 
 {% block main %}
 
-<div class="">
+<div class="lg:mx-56">
 
     <h2 class="text-2xl font-medium text-gray-600">Your Cart {{ request.user }}</h2>
 
@@ -14,11 +14,11 @@
         <!-- orders -->
         {% for item in items %}
             <div class="bg-amber-50 p-3 rounded-md my-4 shadow-md">
-                <div class="grid grid-cols-2 space-x-4">
+                <div class="grid md:grid-cols-2 space-x-4">
                     <div class="">
                         <img src="{{ item.pizza.pizza_image.url }}" class="h-full w-full" alt="">
                     </div>
-                    <div class="">
+                    <div class="mt-2 md:my-0">
                         <div class="text-gray-600 font-medium">
                             <div class="flex items-center justify-between">
                                 <h3 class="text-lg">{{ item.pizza.name }}</h3>
@@ -32,7 +32,7 @@
                                 {% endfor %}
                             </h3>
                             <h3>Quantity : {{ item.quantity }}</h3>
-                            <h3>Total : {{ item.price }}</h3>
+                            <h3>Total : ₹{{ item.price }}</h3>
                         </div>
                         <div class="mt-3 flex items-center justify-between">
                             <a href="" class="border p-1 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white" >Customise <i class="ri-pencil-line"></i> </a>

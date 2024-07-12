@@ -4,21 +4,21 @@
 
 
 {% block main %}
-
-<div class="bg-amber-200 p-6 rounded-lg">
+<div class="lg:flex lg:items-center lg:justify-center">
+<div class="bg-amber-200 p-3 md:p-6 rounded-lg">
     <!-- image  -->
     <div>
-        <img src="{{ pizza.pizza_image.url }}" alt="">
+        <img class="w-full" src="{{ pizza.pizza_image.url }}" alt="">
     </div>
 
 
     <!-- name and description  -->
-    <div class="my-6 p-2">
+    <div class="my-6 p-2 lg:mt-12">
         <div class="flex items-center justify-between">
-            <h2 class="text-xl font-semibold">{{ pizza.name }}</h2>
-            <button class="cursor-text border px-1 {% if pizza.category == 'Veg' %}border-emerald-700{% else %}border-rose-600{% endif %}"><i class="ri-circle-fill {% if pizza.category == 'Veg' %}text-emerald-700{% else %}text-rose-600{% endif %} "></i></button>
+            <h2 class="text-xl lg:text-2xl font-semibold">{{ pizza.name }}</h2>
+            <button class="cursor-text lg:text-xl border px-1 {% if pizza.category == 'Veg' %}border-emerald-700{% else %}border-rose-600{% endif %}"><i class="ri-circle-fill {% if pizza.category == 'Veg' %}text-emerald-700{% else %}text-rose-600{% endif %} "></i></button>
         </div>
-        <p class="mt-2 text-gray-600">{{ pizza.description }}</p>
+        <p class="mt-2 lg:mt-6 lg:text-lg text-gray-600">{{ pizza.description }}</p>
         <div class="h-[1px] bg-black mt-10"></div>
     </div>
 
@@ -27,9 +27,9 @@
         {% csrf_token %}
 
         <!-- size  -->
-        <div class="mt-10 p-2">
-            <h2 class="text-xl font-medium">Select Size</h2>
-            <div class="mt-4 px-6 flex items-center justify-evenly">
+        <div class="mt-6 md:mt-10 p-2"> 
+            <h2 class="text-xl lg:text-2xl font-medium">Select Size</h2>
+            <div class="mt-4 px-6 grid grid-cols-2 gap-3 md:gap-0 md:flex items-center justify-evenly lg:justify-center lg:gap-6">
                 {% for sz in size %}
                     <div>
                         <label class="relative cursor-pointer">
@@ -50,11 +50,11 @@
 
         <!-- toppings  -->
         <div class="mt-10 p-2">
-            <h2 class="text-xl font-medium">Add Toppings</h2>
+            <h2 class="text-xl lg:text-2xl font-medium">Add Toppings</h2>
             <!-- veg toppings  -->
             <div class="my-4 p-2">
-                <h2 class="font-medium text-lg">Veg Toppings</h2>
-                <div class="mt-4 grid grid-cols-3 gap-4">
+                <h2 class="font-medium text-lg lg:text-xl">Veg Toppings</h2>
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 lg:px-8">
                     {% for top in veg_topping %}
                         <label class="relative cursor-pointer">
                             <input type="checkbox" name="toppings" value="{{ top.topping_name }}" class="peer sr-only">
@@ -69,8 +69,8 @@
             
             <!-- non-veg toppings  -->
             <div class="my-4 p-2">
-                <h2 class="font-medium text-lg">Non-Veg Toppings</h2>
-                <div class="mt-4 grid grid-cols-3 gap-4">
+                <h2 class="font-medium text-lg lg:text-xl">Non-Veg Toppings</h2>
+                <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4 lg:p-8">
                     {% for top in non_veg_topping %}
                         <label class="relative cursor-pointer">
                             <input type="checkbox" name="toppings" value="{{ top.topping_name }}" class="peer sr-only">
@@ -87,12 +87,12 @@
 
 
         <!-- quantity  -->
-        <div class="my-10 flex items-center justify-between">
+        <div class="my-10 lg:my-12 flex items-center justify-between">
             <div>
-                <label for="quantity" class="text-xl font-medium">Quantity</label>
-                <input type="number" name="quantity" min="1" max="10" value="1" class="rounded-md border-emerald-700 bg-emerald-50 focus:border-emerald-700 focus:ring-emerald-700">
+                <label for="quantity" class="text-xl lg:text-2xl font-medium">Quantity</label>
+                <input type="number" name="quantity" min="1" max="10" value="1" class="lg:ms-4 rounded-md border-emerald-700 bg-emerald-50 focus:border-emerald-700 focus:ring-emerald-700">
             </div>
-            <div class="text-lg">
+            <div class="text-lg lg:text-xl">
                 <span class="font-medium">Category : </span>
                 <span class="text-gray-600 font-medium">{{ pizza.category }}</span>
             </div>
@@ -103,16 +103,17 @@
         
         
         <!-- bottom border - price & add to cart  -->
-        <div class="bg-rose-500 py-5 px-12">
-            <div class="flex justify-between items-center">
-                <p class="font-medium text-white text-lg">Total Price | ₹{{ pizza.price }}</p>
-                <a href="{% url 'add_item_cart' pizza.uid %}"><button class="border p-3 font-medium text-white border-white hover:bg-emerald-600 hover:text-white">Add To Cart</button></a>
+        <div class="bg-rose-500 p-4 md:py-5 md:px-12 lg:px-16">
+            <div class="flex flex-col items-end md:flex-row md:justify-between md:items-center">
+                <p class="font-medium text-white text-lg lg:text-xl">Total Price | ₹{{ pizza.price }}</p>
+                <a href="{% url 'add_item_cart' pizza.uid %}"><button class="mt-3 border p-3 lg:text-xl font-medium text-white border-white hover:bg-emerald-600 hover:text-white">Add To Cart</button></a>
             </div>
         </div>
 
         
     </form>
     
+</div>
 </div>
 
 {% endblock %}
