@@ -12,4 +12,6 @@ urlpatterns = [
     path('cart_view/', cart_view, name='cart_view'),
     # path('customize_cart/<uuid:order_item_id>', customize_cart, name='customize_cart'),
     path('delete_cart_item/<uuid:order_item_id>', delete_cart_item, name='delete_cart_item'),
+    path('order_payment/', order_payment, name='order_payment'),
+    path('payment_success/', payment_success, name='payment_success'),
 ]

@@ -1,0 +1,18 @@
+{% load 'base.html' %}
+
+{% block title %} Payment Status {% endblock %}
+
+
+{% block main %}
+
+<div class="flex items-center justify-center">
+
+    <div class="p-5 bg-slate-500"></div>
+    {% if {{ status }} == 'success' %}
+        <p>success</p>
+    {% else %}
+        <p>Fail</p>
+    {% endif %}
+</div>
+
+{% endblock %}

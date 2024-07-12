@@ -1,8 +1,16 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from instamojo_wrapper import Instamojo
+from django.conf import settings
+from django.urls import reverse
+
+
+api = Instamojo(api_key=settings.INSTAMOJO_API_KEY,
+                auth_token=settings.INSTAMOJO_AUTH_TOKEN,
+                endpoint=settings.INSTAMOJO_ENDPOINT)
 
 
 
@@ -164,14 +172,11 @@ def add_item_cart(request, pz_id):
 # cart page 
 def cart_view(request):
     #get current user pending orders 
-    customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
+    customer_orders = CustomerOrder.objects.filter(user = request.user, status = 'Pending').first()
     order_count = OrderItem.objects.filter(order=customer_orders).count()
 
     #check if there is any pending order or not
-    if not customer_orders:
-        items = []
-        order_total = 0
-    else:
+    if customer_orders:
         items = OrderItem.objects.filter(order = customer_orders)
         # calculate total price for the order 
         order_total = sum(item.price for item in items)
@@ -179,6 +184,9 @@ def cart_view(request):
         customer_orders.total_amount = order_total
         customer_orders.item_in_cart = order_count
         customer_orders.save()
+    else:
+        items = []
+        order_total = 0
 
     return render(request, 'cart.html', {'items':items, 'order_total':order_total})
 
@@ -225,3 +233,42 @@ def delete_cart_item(request, order_item_id):
         return redirect('cart_view')
     except Exception as e:
         return redirect('cart_view', e)
+
+
+
+#order payment
+def order_payment(request):
+    #get current user pending orders 
+    customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
+    order_count = OrderItem.objects.filter(order=customer_orders).count()
+
+    #check if there is any pending order or not
+    # if not customer_orders:
+    #     redirect('cart_view')
+    
+    response = api.payment_request_create(
+        amount= str(customer_orders.total_amount),
+        purpose= 'Order Payment',
+        buyer_name= request.user.username,
+        email= request.user.email,
+        redirect_url= request.build_absolute_uri(reverse('payment_success')),
+    )
+    print(response)
+
+    return redirect(response['payment_request']['longurl'])
+
+
+#payment result
+def payment_success(request):
+    payment_request_id = request.GET.get('payment_request_id')
+    payment_id = request.GET.get('payment_id')
+    status = request.GET.get('payment_status')
+
+    if status == 'Credit':
+        customer_order = CustomerOrder.objects.get(user = request.user, status = 'Pending')
+        if customer_order:
+            customer_order.status = 'Completed'
+            customer_order.save()
+            return render(request, 'payment_result.html', {'status':'success'})
+        
+    return render(request, 'payment_result.html', {'status':'fail'})

@@ -139,3 +139,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+INSTAMOJO_API_KEY = 'test_f69df8ec22ca5f514320a06a7e9'
+INSTAMOJO_AUTH_TOKEN = 'test_622a4394bb72e31c327355eb100'
+INSTAMOJO_ENDPOINT = 'https://test.instamojo.com/api/1.1/'
