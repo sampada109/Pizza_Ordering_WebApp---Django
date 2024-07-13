@@ -93,7 +93,7 @@ def user_account(request):
 
 
 #pizza detailed page
-def pizza_detail(request, pz_id):
+def pizza_detail(request, pz_id, item_id=None):
     pizza = Pizza.objects.get(uid = pz_id)
     size = Size.objects.all()
     veg_topping = Topping.objects.filter(category='Veg')
@@ -125,7 +125,7 @@ def add_item_cart(request, pz_id):
         total_price *= quantity
 
         #create or get the order
-        order, created = CustomerOrder.objects.get_or_create(user = request.user)
+        order, created = CustomerOrder.objects.get_or_create(user = request.user, status='Pending')
 
         # create OrderItem 
         order_item = OrderItem.objects.create(
@@ -152,7 +152,7 @@ def add_item_cart(request, pz_id):
         total_price = pizza.price + size.price
 
         #create or get the order
-        order, created = CustomerOrder.objects.get_or_create(user = request.user)
+        order, created = CustomerOrder.objects.get_or_create(user = request.user, status='Pending')
 
         # create OrderItem 
         order_item = OrderItem.objects.create(
@@ -175,55 +175,84 @@ def cart_view(request):
     customer_orders = CustomerOrder.objects.filter(user = request.user, status = 'Pending').first()
     order_count = OrderItem.objects.filter(order=customer_orders).count()
 
+    #to display in the cutomised order
+    select_size = Size.objects.all()
+    select_veg_top = Topping.objects.filter(category='Veg')
+    select_non_top = Topping.objects.filter(category='Non-Veg')
+
+    
     #check if there is any pending order or not
     if customer_orders:
-        items = OrderItem.objects.filter(order = customer_orders)
+        items = OrderItem.objects.filter(order = customer_orders).order_by('-created_at')
         # calculate total price for the order 
         order_total = sum(item.price for item in items)
 
         customer_orders.total_amount = order_total
         customer_orders.item_in_cart = order_count
         customer_orders.save()
+
+
+
     else:
         items = []
         order_total = 0
 
-    return render(request, 'cart.html', {'items':items, 'order_total':order_total})
+    return render(request, 'cart.html', {'items':items, 'order_total':order_total, 'select_size':select_size, 'select_veg_top':select_veg_top, 'select_non_top':select_non_top})
 
 
 # customise cart item 
-# def customize_cart(request, order_item_id):
-#     order_item = OrderItem.objects.get(uid = order_item_id)
-#     pizza = order_item.pizza
+def customize_cart(request, order_item_id):
+    order_item = OrderItem.objects.get(uid = order_item_id)
+    pizza = order_item.pizza
 
-#     # if any update id done 
-#     if request.method == 'POST':
-#         size = request.POST.get('size')
-#         quantity = int(request.POST.get('quantity'))
-#         topping_list = request.POST.getlist('toppings')
+    # if any update id done 
+    if request.method == 'POST':
+        size = request.POST.get('size')
+        quantity = int(request.POST.get('quantity'))
+        topping_list = request.POST.getlist('toppings')
 
-#         #update existing order items
-#         order_item.size = Size.objects.get(size=size)
-#         order_item.quantity = quantity
-#         toppings = Topping.objects.filter(topping_name__in = topping_list)
-#         order_item.topping.set(toppings)
-#         total_price = pizza.price + size.price
-#         for top in toppings:
-#             total_price += top.price
-#         total_price *= quantity
-#         order_item.price = total_price
+        #update existing order items
+        order_item.size = Size.objects.get(size=size)
+        order_item.quantity = quantity
+        toppings = Topping.objects.filter(topping_name__in = topping_list)
+        order_item.topping.set(toppings)
+        total_price = pizza.price + order_item.size.price
+        for top in toppings:
+            total_price += top.price
+        total_price *= quantity
+        order_item.price = total_price
 
-#         order_item.save()
+        order_item.save()
 
-#         return redirect('cart_view')
+        return redirect('cart_view')
     
-#     else:
-#         size = order_item.size
-#         quantity = order_item.quantity
-#         veg_toppings = Topping.objects.filter(category='Veg') 
-#         non_veg_toppings = Topping.objects.filter(category='Non-Veg') 
+    else:
+        all_size = Size.objects.all()
+        all_veg_top = Topping.objects.filter(category='Veg')
+        all_non_top = Topping.objects.filter(category='Non-Veg')
+        select_size = order_item.size
+        select_quantity = order_item.quantity
+        select_veg_top = order_item.topping.filter(category='Veg') 
+        select_non_top = order_item.topping.filter(category='Non-Veg')
+        print(order_item.size.size)
+        print(order_item.quantity)
+        print(order_item.topping.all().values())
+        print(order_item.topping.filter(category='Veg').all().values())
+        print(order_item.topping.filter(category='Non-Veg').all().values())
+        print(pizza.name)
 
-#     return render(request, 'pizza_detail.html', {'pizza':pizza, 'selected_order_item':order_item,'selected_size':size, 'veg_topping':veg_toppings, 'non_veg_topping':non_veg_toppings})
+        context = {
+            'all_size':all_size,
+            'all_veg_top':all_veg_top,
+            'all_non_top':all_non_top,
+            'select_size':select_size,
+            'select_quantity':select_quantity,
+            'select_veg_top':select_veg_top,
+            'select_non_top':select_non_top,
+            'pizza':pizza
+        }
+
+    return render(request, 'customize_order.html', {'context':context})
 
 
 # deleting item from cart
@@ -241,10 +270,6 @@ def order_payment(request):
     #get current user pending orders 
     customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
     order_count = OrderItem.objects.filter(order=customer_orders).count()
-
-    #check if there is any pending order or not
-    # if not customer_orders:
-    #     redirect('cart_view')
     
     response = api.payment_request_create(
         amount= str(customer_orders.total_amount),

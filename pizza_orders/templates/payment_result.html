@@ -1,18 +1,24 @@
-{% load 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %} Payment Status {% endblock %}
 
 
 {% block main %}
 
-<div class="flex items-center justify-center">
+<div class="flex flex-col gap-4 items-center justify-center w-full h-full p-16 mt-24">
 
-    <div class="p-5 bg-slate-500"></div>
-    {% if {{ status }} == 'success' %}
-        <p>success</p>
+    {% if status == 'success' %}
+        <p class="text-2xl">Payment Successful</p>
+        <div class="p-10 text-4xl bg-emerald-500 rounded-full">
+            <i class="ri-check-double-line"></i>
+        </div>
+        <p>You can check the payment invoice on your email</p>
     {% else %}
-        <p>Fail</p>
-    {% endif %}
+        <p class="text-2xl">Payment Failed</p>
+        <div class="py-8 px-9 text-4xl bg-red-500 rounded-full">
+            <i class="ri-error-warning-line"></i>
+        </div>
+        {% endif %}
 </div>
 
 {% endblock %}
