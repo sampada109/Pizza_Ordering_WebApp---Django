@@ -17,12 +17,12 @@
 		<!-- navbar starts  -->
 		<nav class="bg-rose-500 flex items-center justify-between h-16 px-3 md:px-20 lg:px-40 md:text-xl text-white">
 			<div class="left flex">
-				<a href="{% url 'index' %}"><img class="h-9" src="https://cdn-icons-png.freepik.com/256/1404/1404945.png?semt=ais_hybrid" alt=""></a>
-				<a href="{% url 'index' %}"><h4 class="hidden lg:block ml-2 text-2xl font-medium">Pizzeria</h4></a>
+				<a href="{% url 'home' %}"><img class="h-9" src="https://cdn-icons-png.freepik.com/256/1404/1404945.png?semt=ais_hybrid" alt=""></a>
+				<a href="{% url 'home' %}"><h4 class="hidden lg:block ml-2 text-2xl font-medium">Pizzeria</h4></a>
 			</div>
 			<div class="middle text-base md:text-lg space-x-2 md:space-x-7">
+				<a href="{% url 'home' %}">Home</a>
 				<a href="{% url 'index' %}">Menu</a>
-				<a href="">Offers</a>
 			</div>
 			<div class="right">
 				{% if request.user.is_authenticated %}

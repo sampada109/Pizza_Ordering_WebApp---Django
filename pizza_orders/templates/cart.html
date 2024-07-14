@@ -36,37 +36,6 @@
                                 <h3>Total : ₹{{ item.price }}</h3>
                             </div>
 
-                            
-                            <!-- customize order  -->
-                            <div id="cutomize-{{item.uid}}" class="hidden">
-                                <label for="size">Size :
-                                    <select name="size" id="">
-                                        {% for size in select_size %}
-                                            <option value="{{ size.size }}" {% if size.size == item.size.size %} selected {% endif %}>{{ size.size }}
-                                            </option>
-                                        {% endfor %}
-                                    </select>
-                                </label>
-                                <h3>Toppings :
-                                    <h4>Veg Toppings:
-                                        {% for top in select_veg_top %}
-                                            <label for="topping">{{ top.topping_name }}</label>
-                                            <input type="checkbox" value="{{ top.topping_name }}" {% if top in item.topping.all %} checked {% endif %}>
-                                        {% endfor %}
-                                    </h4>
-                                    <h4>Non Veg Toppings:
-                                        {% for top in select_non_top %}
-                                            <label for="topping">{{ top.topping_name }}</label>
-                                            <input type="checkbox" value="{{ top.topping_name }}" {% if top in item.topping.all %} checked {% endif %}>
-                                        {% endfor %}
-                                    </h4>
-                                </h3>
-                                <h3>Quantity : {{ item.quantity }}</h3>
-
-                                <a href="" class="border p-1 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white" >Save</a>
-                            </div>
-
-
                         </div>
                         <div class="mt-3 flex items-center justify-between">
                             <a href="{% url 'customize_cart' item.uid %}" id="customizeBtn-{{item.uid}}" class="border p-1 border-emerald-600 text-emerald-600 hover:bg-emerald-600 hover:text-white" >Customise <i class="ri-pencil-line"></i> </a>

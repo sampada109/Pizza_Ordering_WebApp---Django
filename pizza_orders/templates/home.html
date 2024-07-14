@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %} Pizzeria | Home {% endblock %}
+
+
+{% block main %}
+
+    <div class="lg:mx-16">
+
+    
+        <div class="w-full lg:h-96">
+            <img src="https://i.etsystatic.com/32434499/r/il/76ac45/3860443665/il_fullxfull.3860443665_gtbm.jpg" alt="Background Image" class="w-full h-full object-cover">
+        </div>
+
+        <div class="mt-6 mb-10 lg:my-10 flex flex-col items-center py-4 px-5 lg:p-12">
+            <h3 class="text-2xl md:text-4xl lg:text-5xl font-medium text-rose-600">A Slice Above the Rest</h3>
+            <p class="mt-2 md:mt-4 lg:mt-6 text-lg lg:text-xl text-gray-600 lg:mx-16">Welcome to Pizzeria, where every bite is a celebration of flavor and tradition. Our passion for pizza-making shines through in each handcrafted pie, made with the finest ingredients and baked to perfection. Whether you're a fan of classic margherita or adventurous gourmet creations, we invite you to customize your pizza to suit your unique taste. Join us on a culinary journey that promises to delight your senses and satisfy your cravings.</p>
+        </div>
+
+        <div class="w-full lg:h-96">
+            <img src="https://www.pizzahutbd.com/attached_images/deals/8/Double-Deal---OLO-Banner-Jan-10.jpg" class="w-full h-full object-cover" alt="">
+        </div>
+
+        <div class="my-12 md:my-16 grid flex-col md:grid-cols-2 lg:my-32">
+            <div class="flex flex-col items-center text-center justify-center">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-medium text-rose-600">Explore Menu!</h3>
+                <p class="mt-2 md:mt-4 lg:mt-6 text-lg lg:text-xl text-gray-600">Find Many Delicious Pizza with Fresh Ingredients, Authentic Taste.</p>
+                <a href="{% url 'index' %}" class="mt-4 lg:mt-8 py-3 lg:py-4 px-6 text-xl rounded-full border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white">Menu <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+            <div class="hidden md:block">
+                <img class="rounded-lg lg:h-96 lg:w-full" src="https://images.pexels.com/photos/845802/pexels-photo-845802.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+            </div>
+        </div>
+
+        <div class="w-full lg:h-96" >
+            <img class="w-full h-full object-cover" src="https://eg.arabiccoupon.com/sites/default/files/styles/free/public/offers/2019-06-june-_-pizzahut-arabiccoupon-offer-deal-buy1get1free-en_0.jpg" alt="">
+        </div>
+        
+        <div class="my-12 md:my-16 grid flex-col md:grid-cols-2 lg:my-32">
+            <div class="hidden md:block">
+                <img class="rounded-lg lg:h-96 lg:w-full object-cover" src="https://images.pexels.com/photos/1566837/pexels-photo-1566837.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+            </div>
+            <div class="flex flex-col items-center text-center justify-center p-4">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-medium text-rose-600">Offers that you can't resist!</h3>
+                <p class="mt-2 lg:mt-6 text-lg lg:text-xl text-gray-600">Unleash Your Inner Pizza Lover with new and execiting offers everday and every occasion.</p>
+                <a href="{% url 'index' %}" class="mt-4 lg:mt-8 py-3 lg:py-4 px-6 text-xl rounded-full border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white">Offers <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+        </div>
+        
+        <div class="w-full md:h-96" >
+            <img class="w-full h-full object-cover" src="https://cdn.winsightmedia.com/platform/files/public/2023-10/background/Pizza%20Hut%20%247%20deal.jpeg?VersionId=BMvQF4EXgPhEBL.YT2DBVRHW1XA3WKHK" alt="">
+        </div>
+
+        <div class="my-12 md:my-16 grid flex-col md:grid-cols-2 lg:my-32">
+            <div class="flex flex-col items-center text-center justify-center p-4">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-medium text-rose-600">Bringing the Pizzeria to You!</h3>
+                <p class="mt-2 lg:mt-6 text-lg lg:text-xl text-gray-600">Taste the Tradition. Freshly Baked, Just for You.</p>
+                <a href="{% url 'index' %}" class="mt-4 lg:mt-8 py-3 lg:py-4 px-6 text-xl rounded-full border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white">Order Now <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+            <div class="hidden md:block">
+                <img class="rounded-lg lg:h-96 lg:w-full object-cover" src="https://images.pexels.com/photos/1049626/pexels-photo-1049626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+            </div>
+        </div>
+        
+        
+    </div>
+
+{% endblock %}

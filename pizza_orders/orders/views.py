@@ -16,6 +16,9 @@ api = Instamojo(api_key=settings.INSTAMOJO_API_KEY,
 
 # Create your views here.
 
+def home(request):
+    return render(request, 'home.html')
+
 
 def index(request):
     menu = Pizza.objects.all().order_by('-updated_at')
@@ -174,12 +177,6 @@ def cart_view(request):
     #get current user pending orders 
     customer_orders = CustomerOrder.objects.filter(user = request.user, status = 'Pending').first()
     order_count = OrderItem.objects.filter(order=customer_orders).count()
-
-    #to display in the cutomised order
-    select_size = Size.objects.all()
-    select_veg_top = Topping.objects.filter(category='Veg')
-    select_non_top = Topping.objects.filter(category='Non-Veg')
-
     
     #check if there is any pending order or not
     if customer_orders:
@@ -190,14 +187,11 @@ def cart_view(request):
         customer_orders.total_amount = order_total
         customer_orders.item_in_cart = order_count
         customer_orders.save()
-
-
-
     else:
         items = []
         order_total = 0
 
-    return render(request, 'cart.html', {'items':items, 'order_total':order_total, 'select_size':select_size, 'select_veg_top':select_veg_top, 'select_non_top':select_non_top})
+    return render(request, 'cart.html', {'items':items, 'order_total':order_total})
 
 
 # customise cart item 
@@ -234,12 +228,6 @@ def customize_cart(request, order_item_id):
         select_quantity = order_item.quantity
         select_veg_top = order_item.topping.filter(category='Veg') 
         select_non_top = order_item.topping.filter(category='Non-Veg')
-        print(order_item.size.size)
-        print(order_item.quantity)
-        print(order_item.topping.all().values())
-        print(order_item.topping.filter(category='Veg').all().values())
-        print(order_item.topping.filter(category='Non-Veg').all().values())
-        print(pizza.name)
 
         context = {
             'all_size':all_size,
