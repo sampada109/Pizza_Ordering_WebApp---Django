@@ -7,3 +7,5 @@ django-tailwind
 Pillow
 
 instamojo-wrapper
+
+python-dotenv
