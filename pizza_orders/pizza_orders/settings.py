@@ -142,6 +142,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 
-INSTAMOJO_API_KEY = ''
-INSTAMOJO_AUTH_TOKEN = ''
-INSTAMOJO_ENDPOINT = 'https://test.instamojo.com/api/1.1/'
+from dotenv import load_dotenv
+
+load_dotenv()
+
+INSTAMOJO_API_KEY = os.environ.get('INSTAMOJO_API_KEY')
+INSTAMOJO_AUTH_TOKEN = os.environ.get('INSTAMOJO_AUTH_TOKEN')
+INSTAMOJO_ENDPOINT = os.environ.get('INSTAMOJO_ENDPOINT')
