@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block title %} Pizzeria | Offers {% endblock %}
+
+
+{% block main %}
+
+    <div class="lg:mx-20">
+
+    
+        <div class="w-full">
+            <img src="https://restaurants.pizzahut.co.in/files/outlet/outlet_facebook_images/outlet_cover_photo/1093/950_446_Home_Page_Banner_png.png" alt="Background Image" class="w-full h-full object-cover">
+        </div>
+
+        <div class="mt-6 mb-8 lg:my-10 flex flex-col items-center py-4 px-5 lg:p-12">
+            <h3 class="text-2xl md:text-4xl lg:text-5xl font-medium text-rose-600">Offers for Everyone, Everyday!</h3>
+            <p class="mt-2 md:mt-4 lg:mt-6 text-lg lg:text-xl text-gray-600 lg:mx-16">There's something magical about a perfectly made pizza, and at Pizzeria, we’ve perfected the art. Our secret lies in the love and care we put into every step of the process. From kneading the dough to layering on the toppings, each pizza is a labor of love. We invite you to taste the difference that quality and passion make. Whether you’re dining in, taking out, or getting it delivered, Pizzeria is committed to making every pizza experience extraordinary.</p>
+        </div>
+
+        <div class="grid flex-col gap-6 md:gap-0 md:grid-cols-2">
+            <div class="flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQb5L-HOcw0maqiWdEf0BsQnkyCI7U7iDb-PtsuSTIzj3Wrd_O-EO4Qp6U0fTOcNxg6PWA&usqp=CAU" alt=""></div>
+            <div class="flex items-center justify-center"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRim5rlZNsHK6nCbXqS79x5l7Hl4Hpu_vcvNfLfjA6E_TZ1943b6P3NeD7iASv4SY62r5E&usqp=CAU" alt=""></div>
+        </div>
+
+        <div class="w-full mt-16 mb-12 md:my-16 lg:mt-20" >
+            <img class="w-full h-full object-cover" src="https://as1.ftcdn.net/v2/jpg/02/92/08/20/1000_F_292082067_6Vy7oaBb4jYwCNEUqbhlvMHoy8B5c9MY.jpg" alt="">
+        </div>
+
+        <div class="my-12 md:my-16 grid flex-col md:grid-cols-2 lg:my-32">
+            <div class="flex flex-col items-center text-center justify-center">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-medium text-rose-600">Explore Menu!</h3>
+                <p class="mt-2 md:mt-4 lg:mt-6 text-lg lg:text-xl text-gray-600">Find Many Delicious Pizza with Fresh Ingredients, Authentic Taste.</p>
+                <a href="{% url 'index' %}" class="mt-4 lg:mt-8 py-3 lg:py-4 px-6 text-xl rounded-full border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white">Menu <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+            <div class="hidden md:block">
+                <img class="rounded-lg lg:h-96 lg:w-full" src="https://images.pexels.com/photos/845802/pexels-photo-845802.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+            </div>
+        </div>
+
+        <div class="w-full lg:h-96 mt-6 mb-10 lg:my-10" >
+            <img class="w-full h-full object-cover" src="https://api.pizzahut.io/v1/content/en-in/in-1/images/promo/hut300.25d8a775409b50ec421e1bfb74be6937.1.jpg" alt="">
+        </div>
+
+        <div class="my-12 md:my-16 grid flex-col md:grid-cols-2 lg:my-32">
+            <div class="hidden md:block">
+                <img class="rounded-lg lg:h-96 lg:w-full object-cover" src="https://images.pexels.com/photos/1049626/pexels-photo-1049626.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="">
+            </div>
+            <div class="flex flex-col items-center text-center justify-center p-4">
+                <h3 class="text-2xl md:text-3xl lg:text-5xl font-medium text-rose-600">Bringing the Pizzeria to You!</h3>
+                <p class="mt-2 lg:mt-6 text-lg lg:text-xl text-gray-600">Taste the Tradition. Freshly Baked, Just for You.</p>
+                <a href="{% url 'index' %}" class="mt-4 lg:mt-8 py-3 lg:py-4 px-6 text-xl rounded-full border border-rose-600 text-rose-600 hover:bg-rose-600 hover:text-white">Order Now <i class="ri-arrow-right-up-line"></i></a>
+            </div>
+        </div>
+        
+        
+    </div>
+
+{% endblock %}

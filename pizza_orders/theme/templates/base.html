@@ -23,6 +23,7 @@
 			<div class="middle text-base md:text-lg space-x-2 md:space-x-7">
 				<a href="{% url 'home' %}">Home</a>
 				<a href="{% url 'index' %}">Menu</a>
+				<a href="{% url 'offers' %}">Offers</a>
 			</div>
 			<div class="right">
 				{% if request.user.is_authenticated %}
@@ -55,13 +56,33 @@
 
 
 		<!-- footer starts  -->
-		<!-- <footer class="bg-rose-500 text-white p-5 inset-0 bottom-0">
-			<div>Menu</div>
-			<div>Offers</div>
-			<div>Conatct</div>
-			<div>Follow US</div>
-			<div>CopyRight</div>
-		</footer> -->
+		<footer class="bg-rose-600 text-lg font-medium text-white p-5 md:p-10 md:pb-5 inset-0 bottom-0">
+			<div class="grid grid-cols-2 flex-col lg:ms-20 gap-4">
+				<div class="flex flex-col gap-2">
+					<div class="md:flex items-center gap-4">
+						<div><a href="{% url 'home' %}"><i class="ri-home-4-line"></i> Home</a></div>
+						<div><a href="{% url 'index' %}"><i class="ri-menu-search-line"></i> Menu</a></div>
+						<div><a href=""></a><i class="ri-discount-percent-line"></i> Offers</div>
+					</div>
+					{% if request.user.is_authenticated %}
+						<div class="md:flex items-center gap-4">
+							<div><a href="{% url 'cart_view' %}"><i class="ri-shopping-bag-line"></i> Cart</a></div>
+							<div><a href="{% url 'user_account' %}"><i class="ri-account-circle-line"></i> Account</a></div>
+						</div>
+					{% endif %}
+				</div>
+				<div class="md:flex flex-col gap-1">
+					<div>Other Links</div>
+					<div class="flex items-center gap-4 text-3xl">
+						<a href=""><i class="ri-github-fill"></i></a> 
+						<a href=""><i class="ri-linkedin-box-fill"></i></a>
+					</div>
+				</div>
+			</div>
+			<div class="text-center mt-6 lg:mt-8">
+				<i class="ri-copyright-line"></i> CopyRight 2024. All Rights Reserved.
+			</div>
+		</footer>
 		<!-- footer ends  -->
 
 	</body>

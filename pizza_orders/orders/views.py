@@ -19,6 +19,9 @@ api = Instamojo(api_key=settings.INSTAMOJO_API_KEY,
 def home(request):
     return render(request, 'home.html')
 
+def offers(request):
+    return render(request, 'offers.html')
+
 
 def index(request):
     menu = Pizza.objects.all().order_by('-updated_at')
