@@ -8,8 +8,6 @@ cd pizza_orders
 # Install dependencies
 pip install -r ../requirements.txt
 
-cd pizza_orders
-
 # Convert static asset files
 python manage.py collectstatic --no-input
 
