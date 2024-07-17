@@ -145,13 +145,6 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': os.environ.get('CLOUD_API_SECRET')
 }
 
-<<<<<<< HEAD
-print(os.environ.get('CLOUD_NAME'))
-print(os.environ.get('CLOUD_API_KEY'))
-print(os.environ.get('CLOUD_API_SECRET'))
-
-=======
->>>>>>> b8cbdce (38th commit finishing)
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
