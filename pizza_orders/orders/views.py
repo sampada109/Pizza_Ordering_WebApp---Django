@@ -3,6 +3,7 @@ from .models import *
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
 from instamojo_wrapper import Instamojo
 from django.conf import settings
 from django.urls import reverse
@@ -92,6 +93,7 @@ def user_logout(request):
 
 
 #user profile - account page
+@login_required(login_url = '/login/')
 def user_account(request):
     user = User.objects.get(username = request.user.username)
     customer_order = CustomerOrder.objects.filter(user = request.user).order_by('-updated_at')
@@ -110,6 +112,7 @@ def pizza_detail(request, pz_id, item_id=None):
 
 
 # add pizza to cart 
+@login_required(login_url = '/login/')
 def add_item_cart(request, pz_id):
     pizza = Pizza.objects.get(uid = pz_id)
 
@@ -176,6 +179,7 @@ def add_item_cart(request, pz_id):
     
 
 # cart page 
+@login_required(login_url = '/login/')
 def cart_view(request):
     #get current user pending orders 
     customer_orders = CustomerOrder.objects.filter(user = request.user, status = 'Pending').first()
@@ -198,6 +202,7 @@ def cart_view(request):
 
 
 # customise cart item 
+@login_required(login_url = '/login/')
 def customize_cart(request, order_item_id):
     order_item = OrderItem.objects.get(uid = order_item_id)
     pizza = order_item.pizza
@@ -247,6 +252,7 @@ def customize_cart(request, order_item_id):
 
 
 # deleting item from cart
+@login_required(login_url = '/login/')
 def delete_cart_item(request, order_item_id):
     try:
         OrderItem.objects.get(uid = order_item_id).delete()
@@ -257,6 +263,7 @@ def delete_cart_item(request, order_item_id):
 
 
 #order payment
+@login_required(login_url = '/login/')
 def order_payment(request):
     #get current user pending orders 
     customer_orders = CustomerOrder.objects.get(user = request.user, status = 'Pending')
@@ -275,6 +282,7 @@ def order_payment(request):
 
 
 #payment result
+@login_required(login_url = '/login/')
 def payment_success(request):
     payment_request_id = request.GET.get('payment_request_id')
     payment_id = request.GET.get('payment_id')
