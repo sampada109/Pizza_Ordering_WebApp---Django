@@ -1,6 +1,6 @@
 # 🍕 Pizza Ordering Web App
 
-This project is about Pizza Ordering Web App built using Django. Users can view the pizza menu, create accounts, place orders, and view their order history. The project showcases skills in web development, Django framework, user authentication, and front-end integration.
+This project is about Pizza Ordering Web App is a full-featured web application built using Django. The web App allows users to browse a variety of pizzas through the pizza menu, create accounts, place orders, add pizzas to cart customize their orders, view their order history and make payments seamlessly. The project showcases skills in web development, robust implementation of Django, user authentication, with deployment on Render and media storage on Cloudinary.
 
 ---
 
